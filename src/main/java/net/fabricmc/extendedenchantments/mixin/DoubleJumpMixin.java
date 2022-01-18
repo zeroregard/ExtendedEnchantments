@@ -20,13 +20,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class DoubleJumpMixin {
     private int extraJumps = 0;
     private boolean jumpedLastTick = false;
+    private boolean superiorVersion = false;
 
     @Inject(method = "tickMovement", at = @At("HEAD"))
     private void tickMovement(CallbackInfo info) {
         ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
+        int doubleJumpLevel = EnchantmentHelper.getEquipmentLevel(ExtendedEnchantments.DOUBLE_JUMP, player);
+        superiorVersion = doubleJumpLevel == 2;
         if (player.isOnGround() || player.isClimbing()) {
             // reset the allowed extra jumps
-            int doubleJumpLevel = EnchantmentHelper.getEquipmentLevel(ExtendedEnchantments.DOUBLE_JUMP, player);
             extraJumps = doubleJumpLevel >= 1 ? 1 : 0;
         } else if (!jumpedLastTick && extraJumps > 0 && (player.getVelocity().y < 0)) {
             // player's off the ground and is attempting to jump:
@@ -46,7 +48,11 @@ public class DoubleJumpMixin {
     }
 
     private boolean canJump(ClientPlayerEntity player) {
+        boolean isTouchingWater = player.isTouchingWater() && !this.superiorVersion;
+        if(player.isTouchingWater()) {
+            extraJumps++;
+        }
         return !wearingUsableElytra(player) && !player.isFallFlying() && !player.hasVehicle()
-                && !player.isTouchingWater() && !player.hasStatusEffect(StatusEffects.LEVITATION);
+                && !isTouchingWater && !player.hasStatusEffect(StatusEffects.LEVITATION);
     }
 }
