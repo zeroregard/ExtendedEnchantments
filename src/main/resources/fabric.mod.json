@@ -23,7 +23,9 @@
       "net.fabricmc.extendedenchantments.ExtendedEnchantments"
     ]
   },
-  "mixins": [],
+  "mixins": [
+    "extendedenchantments.mixins.json"
+  ],
 
   "depends": {
     "fabricloader": ">=0.11.3",
