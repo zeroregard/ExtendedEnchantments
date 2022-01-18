@@ -3,10 +3,11 @@
   "id": "modid",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Extended Enchantments",
+  "description": "Extended Enchantments adds X new enchantments to the game",
   "authors": [
-    "Me!"
+    "NoRegard",
+    "VladTheSheep"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
@@ -14,17 +15,15 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/extendedenchantments/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "net.fabricmc.extendedenchantments.ExtendedEnchantments"
     ]
   },
-  "mixins": [
-    "modid.mixins.json"
-  ],
+  "mixins": [],
 
   "depends": {
     "fabricloader": ">=0.11.3",
