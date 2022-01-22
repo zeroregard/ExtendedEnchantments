@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 // based on https://github.com/TurtleArmyMc/DoubleJump/blob/master/src/main/java/com/turtlearmymc/doublejump/mixin/DoubleJumpMixin.java
 
 @Mixin(ClientPlayerEntity.class)
-public class DoubleJumpMixin {
+public class AcrobaticsMixin {
     private int extraJumps = 0;
     private boolean jumpedLastTick = false;
     private boolean superiorVersion = false;
@@ -25,11 +25,11 @@ public class DoubleJumpMixin {
     @Inject(method = "tickMovement", at = @At("HEAD"))
     private void tickMovement(CallbackInfo info) {
         ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
-        int doubleJumpLevel = EnchantmentHelper.getEquipmentLevel(ExtendedEnchantments.DOUBLE_JUMP, player);
-        superiorVersion = doubleJumpLevel == 2;
+        int acrobaticsLevel = EnchantmentHelper.getEquipmentLevel(ExtendedEnchantments.ACROBATICS, player);
+        superiorVersion = acrobaticsLevel == 2;
         if (player.isOnGround() || player.isClimbing()) {
             // reset the allowed extra jumps
-            extraJumps = doubleJumpLevel >= 1 ? 1 : 0;
+            extraJumps = acrobaticsLevel >= 1 ? 1 : 0;
         } else if (!jumpedLastTick && extraJumps > 0 && (player.getVelocity().y < 0)) {
             // player's off the ground and is attempting to jump:
             if (player.input.jumping && !player.getAbilities().flying) {

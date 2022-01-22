@@ -1,7 +1,7 @@
 package net.fabricmc.extendedenchantments;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.extendedenchantments.enchantment.DoubleJumpEnchantment;
+import net.fabricmc.extendedenchantments.enchantment.AcrobaticsEnchantment;
 import net.fabricmc.extendedenchantments.enchantment.FrostEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.Identifier;
@@ -16,10 +16,10 @@ public class ExtendedEnchantments implements ModInitializer {
             new FrostEnchantment()
     );
 
-	public static Enchantment DOUBLE_JUMP = Registry.register(
+	public static Enchantment ACROBATICS = Registry.register(
 		Registry.ENCHANTMENT,
-		new Identifier("extendedenchantments", "double_jump"),
-		new DoubleJumpEnchantment()
+		new Identifier("extendedenchantments", "acrobatics"),
+		new AcrobaticsEnchantment()
 	);
 
 	@Override

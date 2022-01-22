@@ -4,9 +4,9 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 
-public class DoubleJumpEnchantment extends Enchantment {
-    public DoubleJumpEnchantment() {
-        super(Enchantment.Rarity.UNCOMMON, EnchantmentTarget.ARMOR_FEET, new EquipmentSlot[] { EquipmentSlot.FEET });
+public class AcrobaticsEnchantment extends Enchantment {
+    public AcrobaticsEnchantment() {
+        super(Enchantment.Rarity.UNCOMMON, EnchantmentTarget.ARMOR_LEGS, new EquipmentSlot[] { EquipmentSlot.LEGS });
     }
 
     @Override
