@@ -20,26 +20,45 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class AcrobaticsMixin {
     private int extraJumps = 0;
     private boolean jumpedLastTick = false;
-    private boolean superiorVersion = false;
+    private int acrobaticsLevel = 0;
+
+    // TODO: ignore fall damage from 4 and below?
+    // TODO: implement jumping off of water at level 2
+    // TODO: implement bunny-hopping at level 3
 
     @Inject(method = "tickMovement", at = @At("HEAD"))
     private void tickMovement(CallbackInfo info) {
         ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
-        int acrobaticsLevel = EnchantmentHelper.getEquipmentLevel(ExtendedEnchantments.ACROBATICS, player);
-        superiorVersion = acrobaticsLevel == 2;
-        if (player.isOnGround() || player.isClimbing()) {
+        acrobaticsLevel = EnchantmentHelper.getEquipmentLevel(ExtendedEnchantments.ACROBATICS, player);
+        if (shouldResetJumps(player)) {
             // reset the allowed extra jumps
             extraJumps = acrobaticsLevel >= 1 ? 1 : 0;
-        } else if (!jumpedLastTick && extraJumps > 0 && (player.getVelocity().y < 0)) {
-            // player's off the ground and is attempting to jump:
-            if (player.input.jumping && !player.getAbilities().flying) {
-                if (canJump(player)) {
-                    --extraJumps;
-                    player.jump();
-                }
+        } else if (eligibleForJumping(player)) { 
+            if (playerAttemptingToJump(player)) {
+                handleJump(player);
             }
         }
         jumpedLastTick = player.input.jumping;
+    }
+
+    private boolean shouldResetJumps(ClientPlayerEntity player) {
+        return player.isOnGround() || player.isClimbing();
+    }
+
+    private boolean eligibleForJumping(ClientPlayerEntity player) {
+        // not really sure what this velocity check is doing per se, but doesn't work without it
+        return !jumpedLastTick && extraJumps > 0 &&(player.getVelocity().y < 0); 
+    }
+
+    private boolean playerAttemptingToJump(ClientPlayerEntity player) {
+        return player.input.jumping && !player.getAbilities().flying;
+    }
+
+    private void handleJump(ClientPlayerEntity player) {
+        if (canJump(player)) {
+            --extraJumps;
+            player.jump();
+        }
     }
 
     private boolean wearingUsableElytra(ClientPlayerEntity player) {
@@ -48,11 +67,7 @@ public class AcrobaticsMixin {
     }
 
     private boolean canJump(ClientPlayerEntity player) {
-        boolean isTouchingWater = player.isTouchingWater() && !this.superiorVersion;
-        if(player.isTouchingWater()) {
-            extraJumps++;
-        }
         return !wearingUsableElytra(player) && !player.isFallFlying() && !player.hasVehicle()
-                && !isTouchingWater && !player.hasStatusEffect(StatusEffects.LEVITATION);
+                && !player.isTouchingWater() && !player.hasStatusEffect(StatusEffects.LEVITATION);
     }
 }
