@@ -10,7 +10,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class ExtendedEnchantments implements ModInitializer {
-	public static final CharmStatusEffect CHARM_EFFECT = new CharmStatusEffect();
 
 	public static Enchantment FROST = Registry.register(
 			Registry.ENCHANTMENT,
@@ -35,6 +34,6 @@ public class ExtendedEnchantments implements ModInitializer {
 		Registry.register(
 				Registry.STATUS_EFFECT,
 				new Identifier("extendedenchantments", "charm"),
-				CHARM_EFFECT);
+				new CharmStatusEffect());
 	}
 }

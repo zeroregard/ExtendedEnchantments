@@ -1,6 +1,6 @@
 package net.fabricmc.extendedenchantments.enchantment;
 
-import net.fabricmc.extendedenchantments.ExtendedEnchantments;
+import net.fabricmc.extendedenchantments.status_effects.CharmStatusEffect;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
@@ -28,7 +28,7 @@ public class CharmEnchantment extends Enchantment {
     public void onTargetDamaged(LivingEntity user, Entity target, int level) {
         if (target instanceof MobEntity) {
             ((MobEntity) target)
-                    .addStatusEffect(new StatusEffectInstance(ExtendedEnchantments.CHARM_EFFECT, 200, 1));
+                    .addStatusEffect(new StatusEffectInstance(new CharmStatusEffect(), 200, 1));
         }
 
         super.onTargetDamaged(user, target, level);
