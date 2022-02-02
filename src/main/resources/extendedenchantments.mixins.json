@@ -2,7 +2,10 @@
     "required": true,
     "package": "net.fabricmc.extendedenchantments.mixin",
     "compatibilityLevel": "JAVA_8",
-    "mixins": [],
+    "mixins": [
+      "MobAccessor",
+      "EntityAccessor"
+    ],
     "client": [
       "AcrobaticsMixin"
     ],

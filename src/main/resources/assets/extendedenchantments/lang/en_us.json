@@ -1,4 +1,7 @@
 {
     "enchantment.extendedenchantments.frost": "Frost",
-    "enchantment.extendedenchantments.double_jump": "Double Jump"
+    "enchantment.extendedenchantments.double_jump": "Double Jump",
+    "enchantment.extendedenchantments.charm": "Charm",
+
+    "effect.extendedenchantments.charm": "Charm"
   }
